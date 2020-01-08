@@ -4,7 +4,7 @@ import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.functions.max
 
 
-fun main() {
+fun main2() {
     val spark: SparkSession = getSparkSession("Spark_SQL")!!
 
     val dataframe = spark.range(100000000)

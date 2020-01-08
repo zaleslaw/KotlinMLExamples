@@ -8,7 +8,7 @@ import org.apache.ignite.ml.tree.DecisionTreeClassificationTrainer
 import org.apache.ignite.ml.tree.DecisionTreeNode
 
 
-fun main() {
+fun main1() {
     val ignite = Ignition.start()
     val dataCache = TitanicUtils.readPassengers(ignite)
 
