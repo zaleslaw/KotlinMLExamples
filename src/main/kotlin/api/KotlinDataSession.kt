@@ -1,8 +1,9 @@
 package api
 
-import api.df.Column
+import api.df.MetaColumn
 import api.df.DataFrame
 import api.df.Row
+import api.df.RowBuilder
 import api.io.FileFormat
 import api.io.FileOption
 import api.sql.ifExistTableStrategy
@@ -17,9 +18,17 @@ abstract class KotlinDataSession() {
     // Create DataFrame methods
     abstract fun of(vararg headers: String): DataFrameBuilder
 
-    abstract fun of(vararg columns: Column): DataFrameBuilder
+    abstract fun of(vararg columns: MetaColumn): DataFrameBuilder
 
     abstract fun byRows(rows: Iterable<Row>): DataFrame
+
+
+    // Create Row methods
+    abstract fun createRow(vararg headers: String): RowBuilder
+
+    abstract fun createRow(vararg columns: MetaColumn): RowBuilder
+
+    abstract fun createAndFillRow(data: Map<Any, Any>): DataFrame
 
 
     // IO methods
@@ -39,6 +48,12 @@ abstract class KotlinDataSession() {
 
 class DataFrameBuilder {
     operator fun invoke(vararg rows: Iterable<Any?>): DataFrame {
+        TODO();
+    }
+}
+
+class RowBuilder {
+    operator fun invoke(data: Iterable<Any?>): DataFrame {
         TODO();
     }
 }

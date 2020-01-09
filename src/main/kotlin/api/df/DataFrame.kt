@@ -14,17 +14,22 @@ interface DataFrame {
 
     fun schemaToString(): String
 
-    fun columns(): Array<String>
+    fun columnNames(): Array<String>
 
     /** Returns all column names and their data types as an array. */
     fun dtypes(): Array<Pair<String, String>>
 
-    fun addColumn(column: Column)
+    fun addColumn(column: MetaColumn)
 
     fun dropColumn(vararg columnNames: String)
 
-    fun col(columnName: String): Column
 
+    // Data operations
+    fun col(index: Int): DataColumn
+
+    fun col(columnName: String): DataColumn
+
+    fun row(index: Int): Row
 
     // Basic stat
     /** Returns the number of rows in the DataFrame. */
@@ -64,20 +69,20 @@ interface DataFrame {
     // Overloaded for two DataFrames or two DataFrame and one Row with the same schema
 
     /** Adds new data to the current DataFrame or throws exception on the different schemas. */
-    operator fun DataFrame.plus(other: DataFrame)
+    operator fun plus(other: DataFrame): DataFrame
 
-    operator fun DataFrame.plus(row: Row)
+    operator fun plus(row: Row): DataFrame
 
-    operator fun DataFrame.minus(other: DataFrame)
+    operator fun minus(other: DataFrame): DataFrame
 
-    operator fun DataFrame.minus(row: Row)
+    operator fun minus(row: Row): DataFrame
 
-    operator fun DataFrame.contains(other: DataFrame): Boolean
+    operator fun contains(other: DataFrame): Boolean
 
-    operator fun DataFrame.contains(row: Row): Boolean
+    operator fun contains(row: Row): Boolean
 
     // Slicing
-    operator fun DataFrame.get(slicingExpression: String): DataFrame
+    operator fun get(slicingExpression: String): DataFrame
 
     // Statistic functions
     /** Calculates the correlation of two columns of a DataFrame. */
@@ -122,4 +127,5 @@ interface DataFrame {
      * NOTE: additional logic for join conditions is missed.
      */
     fun join(leftDataFrame: DataFrame, joinType : JoinType = JoinType.INNER)
+
 }
