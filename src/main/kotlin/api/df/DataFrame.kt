@@ -61,8 +61,6 @@ interface DataFrame {
      */
     fun sample(withReplacement: Boolean = false, fraction: Double = 0.1, seed: Long = 1234L)
 
-
-
     // Overloaded for two DataFrames or two DataFrame and one Row with the same schema
 
     /** Adds new data to the current DataFrame or throws exception on the different schemas. */
@@ -78,6 +76,8 @@ interface DataFrame {
 
     operator fun DataFrame.contains(row: Row): Boolean
 
+    // Slicing
+    operator fun DataFrame.get(slicingExpression: String): DataFrame
 
     // Statistic functions
     /** Calculates the correlation of two columns of a DataFrame. */
@@ -110,7 +110,9 @@ interface DataFrame {
 
     fun where(predicate: Predicate): DataFrame
 
-    fun orderBy(column: String, sortOrder: SortOrder): DataFrame
+    fun where(predicate: String): DataFrame
+
+    fun orderBy(column: String, sortOrder: SortOrder = SortOrder.ASC): DataFrame
 
     fun groupBy(vararg columns: String): GroupedDataFrame
 
