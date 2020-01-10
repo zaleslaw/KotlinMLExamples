@@ -1,7 +1,6 @@
 package examples
 
 import api.KotlinDataSession
-import api.df.Cell
 import api.df.MetaColumn
 
 fun main4() {
@@ -16,7 +15,7 @@ fun main4() {
     println(r1 == r2)
     // >>> False
 
-    (((r1 + 3) - 1) * 2 + r2/2).show()
+    (((r1 + 3) - 1) * 2 + r2 / 2).show()
     // >>>  -----------------------
     // >>> | Population | CapitalPop |
     // >>> ------------------------

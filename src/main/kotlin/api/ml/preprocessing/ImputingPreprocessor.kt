@@ -2,7 +2,7 @@ package api.ml.preprocessing
 
 import api.df.DataFrame
 
-class ImputingPreprocessor(): PreprocessingModel {
+class ImputingPreprocessor() : PreprocessingModel {
     /**
      * Return the dataframe with the filled missed numbers.
      */

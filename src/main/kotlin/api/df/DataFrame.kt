@@ -1,9 +1,9 @@
 package api.df
 
 import api.sql.JoinType
-import api.sql.group.GroupedDataFrame
 import api.sql.Predicate
 import api.sql.SortOrder
+import api.sql.group.GroupedDataFrame
 
 /**
  * The basic interface for all supported DataFrames.
@@ -90,6 +90,7 @@ interface DataFrame {
 
 
     // Slicing
+    // NOTE: it could be implemented with the different strategies [1..2..3] as in kotlin-numpy or via builders or via String Expressions
     operator fun get(slicingExpression: String): DataFrame
 
     // Statistic functions
@@ -133,6 +134,5 @@ interface DataFrame {
      *
      * NOTE: additional logic for join conditions is missed.
      */
-    fun join(leftDataFrame: DataFrame, joinType : JoinType = JoinType.INNER)
-
+    fun join(leftDataFrame: DataFrame, joinType: JoinType = JoinType.INNER)
 }

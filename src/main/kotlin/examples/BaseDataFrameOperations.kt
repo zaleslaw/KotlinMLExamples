@@ -29,7 +29,7 @@ fun main2() {
             .where("pclass != 1 and age > 20")
             .groupBy("pclass")
             .agg(MAX())
-            .orderBy("pclass",  SortOrder.DESC)
+            .orderBy("pclass", SortOrder.DESC)
             .show()
 
     // >>> 3; 47
@@ -73,7 +73,7 @@ fun main2() {
     val brazilRow = Row(mapOf("Country" to "Brazil", "Population" to 200))
     val russiaRow = Row(mapOf("Country" to "Russia", "Population" to 145))
 
-    if(russiaRow in df4 && brazilRow in df4) {
+    if (russiaRow in df4 && brazilRow in df4) {
         val df5 = df4 - brazilRow - russiaRow
         df5.show()
 

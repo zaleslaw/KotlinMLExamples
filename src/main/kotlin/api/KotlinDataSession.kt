@@ -13,7 +13,9 @@ import java.sql.Connection
 
 abstract class KotlinDataSession() {
     companion object {
-        fun getOrCreate(): KotlinDataSession { return KotlinDataSession()}
+        fun getOrCreate(): KotlinDataSession {
+            return KotlinDataSession()
+        }
     }
 
     // Create DataFrame methods
@@ -40,14 +42,14 @@ abstract class KotlinDataSession() {
 
 
     // IO methods
-    abstract fun read(filePath: Path, fileFormat: FileFormat, vararg options: FileOption):DataFrame
+    abstract fun read(filePath: Path, fileFormat: FileFormat, vararg options: FileOption): DataFrame
 
-    abstract fun write(filePath: Path, fileFormat: FileFormat, vararg options: FileOption):DataFrame
+    abstract fun write(filePath: Path, fileFormat: FileFormat, vararg options: FileOption): DataFrame
 
     // Database methods
-    abstract fun readTable(tableName: String, connection: Connection, schema: String? = null, selectExpr: String):DataFrame
+    abstract fun readTable(tableName: String, connection: Connection, schema: String? = null, selectExpr: String): DataFrame
 
-    abstract fun writeTable(tableName: String, connection: Connection, schema: String? = null, ifExists: ifExistTableStrategy = ifExistTableStrategy.FAIL):DataFrame
+    abstract fun writeTable(tableName: String, connection: Connection, schema: String? = null, ifExists: ifExistTableStrategy = ifExistTableStrategy.FAIL): DataFrame
 
 }
 

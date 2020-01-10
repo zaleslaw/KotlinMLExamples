@@ -3,9 +3,9 @@ package examples
 import api.KotlinDataSession
 import api.df.Row
 import api.io.FileFormat
+import api.ml.Vector
 import api.ml.evaluation.Evaluator
 import api.ml.evaluation.Metric
-import api.ml.Vector
 import api.ml.preprocessing.ImputerTrainer
 import api.ml.trainer.SVM
 import java.nio.file.Paths
@@ -22,9 +22,9 @@ fun main() {
 
     val trainer = SVM()
 
-    val featureExtractor:(Row) -> Vector = {row -> Vector(row["sibsp"], row["age"], row["cabin"])}
+    val featureExtractor: (Row) -> Vector = { row -> Vector(row["sibsp"], row["age"], row["cabin"]) }
 
-    val labelExtractor:(Row) -> Double = {row -> row["survived"].tryDouble()}
+    val labelExtractor: (Row) -> Double = { row -> row["survived"].tryDouble() }
 
     val mdl = trainer.fit(
             imputedTrainDf,

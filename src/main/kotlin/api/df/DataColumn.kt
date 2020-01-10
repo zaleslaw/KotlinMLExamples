@@ -13,7 +13,9 @@ abstract class DataColumn(data: Map<Int, Any>) {
     abstract fun length(): Int
 
     /** Displays the DataColumn in a tabular form. */
-    fun show(truncate: Boolean = true){TODO()}
+    fun show(truncate: Boolean = true) {
+        TODO()
+    }
 
     abstract fun equals(other: DataColumn): Boolean
 

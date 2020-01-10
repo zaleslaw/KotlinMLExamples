@@ -23,7 +23,7 @@ fun main5() {
     // >>> |   4   |
     // >>> |-------|
 
-    (c1/2 + c2*3).where("CapitalPop > 5").show()
+    (c1 / 2 + c2 * 3).where("CapitalPop > 5").show()
 
     // >>>  -----------------------
     // >>> | Population | CapitalPop |
