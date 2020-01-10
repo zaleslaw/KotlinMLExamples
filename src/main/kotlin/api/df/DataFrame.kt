@@ -68,18 +68,18 @@ interface DataFrame {
 
     // Overloaded for two DataFrames or two DataFrame and one Row with the same schema
 
-    /** Adds new data to the current DataFrame or throws exception on the different schemas. */
-    operator fun plus(other: DataFrame): DataFrame
+    /** Adds/removes/checks data presented as Row or DataFrame or throws exception on the different schemas. */
+    infix operator fun plus(other: DataFrame): DataFrame
 
-    operator fun plus(row: Row): DataFrame
+    infix operator fun plus(row: Row): DataFrame
 
-    operator fun minus(other: DataFrame): DataFrame
+    infix operator fun minus(other: DataFrame): DataFrame
 
-    operator fun minus(row: Row): DataFrame
+    infix operator fun minus(row: Row): DataFrame
 
-    operator fun contains(other: DataFrame): Boolean
+    infix operator fun contains(other: DataFrame): Boolean
 
-    operator fun contains(row: Row): Boolean
+    infix operator fun contains(row: Row): Boolean
 
     // Slicing
     operator fun get(slicingExpression: String): DataFrame

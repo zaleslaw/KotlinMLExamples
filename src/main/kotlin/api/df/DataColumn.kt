@@ -6,26 +6,24 @@ abstract class DataColumn(data: Map<String, Any>) {
         TODO("not implemented")
     }
 
+    /** Make operations on two DataColumns. */
+    abstract infix operator fun plus(other: DataColumn): DataFrame
 
+    abstract infix operator fun plus(other: Cell): DataColumn
 
-    /** Make operations on DataColumn. */
-    abstract operator fun plus(other: DataColumn): DataFrame
+    abstract infix operator fun plus(number: Number): DataColumn
 
-    abstract operator fun plus(other: Cell): DataColumn
+    abstract infix operator fun minus(other: DataColumn): DataFrame
 
-    abstract operator fun plus(number: Number): DataColumn
+    abstract infix operator fun minus(other: Cell): DataColumn
 
-    abstract operator fun minus(other: DataColumn): DataFrame
+    abstract infix operator fun minus(number: Number): DataColumn
 
-    abstract operator fun minus(other: Cell): DataColumn
+    abstract infix operator fun times(number: Number): DataColumn
 
-    abstract operator fun minus(number: Number): DataColumn
+    abstract infix operator fun div(number: Number): DataColumn
 
-    abstract operator fun times(number: Number): DataColumn
-
-    abstract operator fun div(number: Number): DataColumn
-
-    abstract operator fun contains(other: Cell): Boolean
+    abstract infix operator fun contains(other: Cell): Boolean
 
     /** Applies a function f to all cells. */
     fun foreach(f: (Cell) -> Unit) {}
