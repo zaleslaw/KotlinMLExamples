@@ -8,18 +8,23 @@
     <artifactId>SparkOnKotlin</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <repositories>
+        <repository>
+            <id>kotlin-numpy</id>
+            <url>https://dl.bintray.com/kotlin/kotlin-numpy</url>
+        </repository>
+    </repositories>
+
     <properties>
         <kotlin.version>1.3.61</kotlin.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.apache.ignite</groupId>
-            <artifactId>ignite-ml</artifactId>
-            <version>2.7.0</version>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>kotlin-numpy</artifactId>
+            <version>0.1.2</version>
         </dependency>
-
-
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>

@@ -1,9 +1,13 @@
 package api
 
-import api.df.*
+import api.df.DataColumn
+import api.df.DataFrame
+import api.df.MetaColumn
+import api.df.Row
 import api.io.FileFormat
 import api.io.FileOption
 import api.sql.ifExistTableStrategy
+import org.jetbrains.numkt.core.KtNDArray
 import java.nio.file.Path
 import java.sql.Connection
 
@@ -45,13 +49,14 @@ abstract class KotlinDataSession() {
 
     abstract fun writeTable(tableName: String, connection: Connection, schema: String? = null, ifExists: ifExistTableStrategy = ifExistTableStrategy.FAIL):DataFrame
 
-    // Generators
-
-
 }
 
 class DataFrameBuilder {
     operator fun invoke(vararg rows: Iterable<Any?>): DataFrame {
+        TODO();
+    }
+
+    operator fun invoke(ndArray: KtNDArray<out Any>): DataFrame {
         TODO();
     }
 }
