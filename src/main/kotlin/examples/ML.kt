@@ -10,7 +10,6 @@ import api.ml.preprocessing.ImputerTrainer
 import api.ml.trainer.SVM
 import java.nio.file.Paths
 
-
 fun main() {
     val session = KotlinDataSession.getOrCreate()
 

@@ -2,7 +2,6 @@ package examples
 
 import api.KotlinDataSession
 
-
 fun main3() {
     val session = KotlinDataSession.getOrCreate()
 

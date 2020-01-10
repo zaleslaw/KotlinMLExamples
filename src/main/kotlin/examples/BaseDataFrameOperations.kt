@@ -8,7 +8,6 @@ import api.sql.SortOrder
 import api.sql.group.MAX
 import java.nio.file.Paths
 
-
 fun main2() {
     val session = KotlinDataSession.getOrCreate()
 

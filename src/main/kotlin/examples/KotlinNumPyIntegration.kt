@@ -4,7 +4,6 @@ import api.KotlinDataSession
 import org.jetbrains.numkt.arange
 import org.jetbrains.numkt.core.reshape
 
-
 fun main6() {
     val ndarray = arange(15).reshape(3, 5)
     val session = KotlinDataSession.getOrCreate()
