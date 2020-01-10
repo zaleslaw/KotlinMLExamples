@@ -64,6 +64,12 @@ fun main2() {
     // >>> | Brazil  |      200  |
     // >>>  -----------------------
 
+    println(df4.col("Country")[3])
+    // >>> "Belarus"
+
+    println(df4.row(1)["Population"])
+    // >>> 80
+
     val brazilRow = Row(mapOf("Country" to "Brazil", "Population" to 200))
     val russiaRow = Row(mapOf("Country" to "Russia", "Population" to 145))
 

@@ -81,6 +81,14 @@ interface DataFrame {
 
     infix operator fun contains(row: Row): Boolean
 
+    /** Adds/removes/checks data presented as DataColumn or throws exception on the different schemas. */
+    infix operator fun plus(column: DataColumn): DataFrame
+
+    infix operator fun minus(column: DataColumn): DataFrame
+
+    infix operator fun contains(column: DataColumn): Boolean
+
+
     // Slicing
     operator fun get(slicingExpression: String): DataFrame
 
@@ -108,7 +116,6 @@ interface DataFrame {
     fun intersect(other: DataFrame)
 
     fun union(other: DataFrame)
-
 
     // SQL operators
     fun select(vararg columns: String): DataFrame
