@@ -10,7 +10,7 @@ import api.ml.preprocessing.ImputerTrainer
 import api.ml.trainer.SVM
 import java.nio.file.Paths
 
-fun main() {
+fun demo_6() {
     val session = KotlinDataSession.getOrCreate()
 
     val dataframe = session.read(Paths.get("/home/titanic.csv"), FileFormat.CSV)

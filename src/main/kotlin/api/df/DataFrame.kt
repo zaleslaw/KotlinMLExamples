@@ -21,8 +21,7 @@ interface DataFrame {
 
     fun addColumn(column: MetaColumn)
 
-    fun dropColumn(vararg columnNames: String)
-
+    fun dropColumn(columnName: String)
 
     // Data operations
     fun col(index: Int): DataColumn
@@ -31,9 +30,15 @@ interface DataFrame {
 
     fun row(index: Int): Row
 
-    // Basic stat
+    // Statistic functions
     /** Returns the number of rows in the DataFrame. */
     fun count(): Long
+
+    /** Calculates the correlation of two columns of a DataFrame. */
+    fun corr(firstColumnName: String, secondColumnName: String, type: CorrelationType = CorrelationType.PEARSON)
+
+    /** Calculates the covariance of two columns of a DataFrame. */
+    fun cov(firstColumnName: String, secondColumnName: String)
 
     /**
      * Computes basic statistics for numeric and string columns, including count, mean, stddev, min, and max.
@@ -67,7 +72,6 @@ interface DataFrame {
     fun sample(withReplacement: Boolean = false, fraction: Double = 0.1, seed: Long = 1234L)
 
     // Overloaded for two DataFrames or two DataFrame and one Row with the same schema
-
     /** Adds/removes/checks data presented as Row or DataFrame or throws exception on the different schemas. */
     infix operator fun plus(other: DataFrame): DataFrame
 
@@ -88,20 +92,48 @@ interface DataFrame {
 
     infix operator fun contains(column: DataColumn): Boolean
 
-
     // Slicing
     // NOTE: it could be implemented with the different strategies [1..2..3] as in kotlin-numpy or via builders or via String Expressions
     operator fun get(slicingExpression: String): DataFrame
 
-    // Statistic functions
-    /** Calculates the correlation of two columns of a DataFrame. */
-    fun corr(firstColumnName: String, secondColumnName: String, type: CorrelationType = CorrelationType.PEARSON)
-
-    /** Calculates the covariance of two columns of a DataFrame. */
-    fun cov(firstColumnName: String, secondColumnName: String)
-
     // NaN, NULL, Nothing handlers (NOTE: for more complex cases, please have a look to Imputer Trainer)
-    // drop or fill https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.DataFrameNaFunctions
+    /** Fills null values in the passed columns with the default values. */
+    infix fun fill(defaultValues: Map<String, Cell>): DataFrame
+
+    /** Fills null values in the passed column with the default value. */
+    fun fill(columnName: String, defaultValue: Cell): DataFrame
+
+    /**
+     * Fills null values in the passed column with the default value.
+     * Generates an exception if the default value is out of column type.
+     */
+    fun fill(columnName: String, defaultValue: Any): DataFrame
+
+    /**
+     * Fills null values in the passed column with the default value.
+     * Generates an exception if the default value is out of column type.
+     */
+    fun fill(column: MetaColumn, defaultValue: Any): DataFrame
+
+    /**
+     * Returns a new DataFrame that drops rows containing less than maxPartOfMissedValuesInRow part of
+     * null or NaN values from all values in row.
+     * @maxPartOfMissedValuesInColumn Value between 0.0 and 1.0.
+     */
+    fun drop(maxPartOfMissedValuesInRow: Double = 0.0): DataFrame
+
+    /** Returns a new DataFrame that drops rows containing any null or NaN values in the passed column. */
+    infix fun drop(columnName: String): DataFrame
+
+    /** Returns a new DataFrame that drops rows containing any null or NaN values in the passed column. */
+    infix fun drop(column: MetaColumn): DataFrame
+
+    /**
+     * Returns a new DataFrame that drops rows containing less than maxPartOfMissedValuesInRow part of
+     * null or NaN values from all values in specified columns.
+     * @maxPartOfMissedValuesInColumn Value between 0.0 and 1.0.
+     */
+    fun drop(vararg columnNames: String, maxPartOfMissedValuesInRow: Double = 0.0): DataFrame
 
     // Functional operators
     /** Applies a function f to all rows. */

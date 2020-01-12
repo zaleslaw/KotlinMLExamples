@@ -17,4 +17,9 @@ class Cell(value: Any) {
     fun tryString(): Double {
         TODO()
     }
+
+
+    fun value(): Any {
+        TODO()
+    }
 }

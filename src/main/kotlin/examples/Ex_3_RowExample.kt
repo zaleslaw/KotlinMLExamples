@@ -3,7 +3,7 @@ package examples
 import api.KotlinDataSession
 import api.df.MetaColumn
 
-fun main4() {
+fun demo_3() {
     val session = KotlinDataSession.getOrCreate()
 
     val r1 = session.createRow("CountryPopulation", "CapitalPop")(listOf(140, 12))

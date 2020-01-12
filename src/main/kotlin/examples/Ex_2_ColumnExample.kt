@@ -4,7 +4,7 @@ import api.KotlinDataSession
 import api.df.Cell
 import api.df.MetaColumn
 
-fun main5() {
+fun demo_2() {
     val session = KotlinDataSession.getOrCreate()
 
     val c1 = session.createColumn("CountryPopulation")(listOf(140, 80, 320))

@@ -1,25 +1,28 @@
 package api.df
 
-/** Column projection with data, including meta-information. */
+/**
+ * Column projection with data, including meta-information.
+ *
+ * It supports
+ */
 abstract class DataColumn(data: Map<Int, Any>) {
-    operator fun get(index: Int): Cell {
-        TODO("not implemented")
-    }
-
     abstract fun metadata(): MetaColumn
 
-    abstract fun values(): Array<Cell>
+    // Getters/setters/equals
+    abstract operator fun get(index: Int): Cell
 
-    abstract fun length(): Int
+    abstract operator fun set(index: Int, cell: Cell)
 
-    /** Displays the DataColumn in a tabular form. */
-    fun show(truncate: Boolean = true) {
-        TODO()
-    }
+    abstract operator fun set(index: Int, number: Number)
 
     abstract fun equals(other: DataColumn): Boolean
 
     abstract fun equals(other: DataFrame): Boolean // True if DataFrame contains one column
+
+    // Converters
+    abstract fun toDF(): DataFrame
+
+    abstract fun toRow(): Row
 
     // Make operations on two DataColumns. NOTE: these methods union two columns to one DataFrame. Could be changed to algebraic operation with return type DataColumn
     abstract infix operator fun plus(other: DataColumn): DataFrame
@@ -47,6 +50,14 @@ abstract class DataColumn(data: Map<Int, Any>) {
     abstract infix operator fun div(number: Number): DataColumn
 
     abstract infix operator fun contains(number: Number): Boolean
+
+    // Others
+    abstract fun values(): Array<Cell>
+
+    abstract fun length(): Int
+
+    /** Displays the DataColumn in a tabular form. */
+    abstract fun show(truncate: Boolean = true)
 
     /** Applies a function f to all cells. */
     fun foreach(f: (Cell) -> Unit) {}

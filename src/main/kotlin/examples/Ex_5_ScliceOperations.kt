@@ -2,7 +2,7 @@ package examples
 
 import api.KotlinDataSession
 
-fun main3() {
+fun demo_5() {
     val session = KotlinDataSession.getOrCreate()
 
     val df = session.of("Country", "Population", "Capital")(
