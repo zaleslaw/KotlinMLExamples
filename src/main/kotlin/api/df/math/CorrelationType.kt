@@ -1,4 +1,4 @@
-package api.df
+package api.df.math
 
 enum class CorrelationType {
     SPEARMAN, PEARSON

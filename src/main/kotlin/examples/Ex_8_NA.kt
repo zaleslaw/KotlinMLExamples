@@ -4,6 +4,9 @@ import api.KotlinDataSession
 import api.df.Cell
 import api.df.MetaColumn
 
+/**
+ * The final examples lights the standard functionality of na package like in R.
+ */
 fun demo_8() {
     val session = KotlinDataSession.getOrCreate()
 
@@ -55,5 +58,4 @@ fun demo_8() {
     // >>>  -----------------------
     // >>> | USA     |      100.0    |
     // >>>  -----------------------
-
 }

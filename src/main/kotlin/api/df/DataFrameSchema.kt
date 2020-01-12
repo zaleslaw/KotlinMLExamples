@@ -1,5 +1,6 @@
 package api.df
 
+/** Could be extended for the meta-data operations and debugging purposes. */
 interface DataFrameSchema {
     fun columns(): Array<MetaColumn>
 

@@ -1,5 +1,5 @@
 package api.sql
 
-enum class ifExistTableStrategy {
+enum class IfExistTableStrategy {
     FAIL, REPLACE, APPEND
 }

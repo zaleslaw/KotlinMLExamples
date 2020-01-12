@@ -6,7 +6,7 @@ import api.df.MetaColumn
 import api.df.Row
 import api.io.FileFormat
 import api.io.FileOption
-import api.sql.ifExistTableStrategy
+import api.sql.IfExistTableStrategy
 import org.jetbrains.numkt.core.KtNDArray
 import java.nio.file.Path
 import java.sql.Connection
@@ -40,7 +40,6 @@ abstract class KotlinDataSession() {
 
     abstract fun createAndFillColumn(data: List<Any>): DataFrame
 
-
     // IO methods
     abstract fun read(filePath: Path, fileFormat: FileFormat, vararg options: FileOption): DataFrame
 
@@ -49,7 +48,7 @@ abstract class KotlinDataSession() {
     // Database methods
     abstract fun readTable(tableName: String, connection: Connection, schema: String? = null, selectExpr: String): DataFrame
 
-    abstract fun writeTable(tableName: String, connection: Connection, schema: String? = null, ifExists: ifExistTableStrategy = ifExistTableStrategy.FAIL): DataFrame
+    abstract fun writeTable(tableName: String, connection: Connection, schema: String? = null, ifExists: IfExistTableStrategy = IfExistTableStrategy.FAIL): DataFrame
 
 }
 

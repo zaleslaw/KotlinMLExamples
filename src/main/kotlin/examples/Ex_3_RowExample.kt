@@ -3,6 +3,7 @@ package examples
 import api.KotlinDataSession
 import api.df.MetaColumn
 
+/** Row class also could be a brick in the wall of the DataFrame API. */
 fun demo_3() {
     val session = KotlinDataSession.getOrCreate()
 

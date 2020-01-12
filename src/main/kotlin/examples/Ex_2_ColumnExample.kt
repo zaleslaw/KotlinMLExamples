@@ -4,6 +4,7 @@ import api.KotlinDataSession
 import api.df.Cell
 import api.df.MetaColumn
 
+/** DataColumn could be a basic unit for data manipulation and DataFrame building. */
 fun demo_2() {
     val session = KotlinDataSession.getOrCreate()
 

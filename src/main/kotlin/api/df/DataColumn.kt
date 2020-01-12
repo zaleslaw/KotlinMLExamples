@@ -2,8 +2,6 @@ package api.df
 
 /**
  * Column projection with data, including meta-information.
- *
- * It supports
  */
 abstract class DataColumn(data: Map<Int, Any>) {
     abstract fun metadata(): MetaColumn
@@ -13,7 +11,7 @@ abstract class DataColumn(data: Map<Int, Any>) {
 
     abstract operator fun set(index: Int, cell: Cell)
 
-    abstract operator fun set(index: Int, number: Number)
+    abstract operator fun set(index: Int, value: Any)
 
     abstract fun equals(other: DataColumn): Boolean
 

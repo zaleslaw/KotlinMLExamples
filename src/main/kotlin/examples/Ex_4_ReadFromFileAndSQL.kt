@@ -6,6 +6,7 @@ import api.sql.SortOrder
 import api.sql.group.MAX
 import java.nio.file.Paths
 
+/** This examples demonstrates the power the easy API of ETL-like process over the DataFrame. */
 fun demo_4() {
     val session = KotlinDataSession.getOrCreate()
 

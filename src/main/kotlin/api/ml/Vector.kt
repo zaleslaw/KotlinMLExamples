@@ -8,4 +8,5 @@ import api.df.Cell
  *
  * Could have more effective implementation for serialization needs or zipping purposes.
  */
-class Vector(vararg values: Cell)
+class Vector(vararg values: Cell) {
+}

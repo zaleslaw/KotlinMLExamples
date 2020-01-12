@@ -1,3 +1,3 @@
 package api.io
 
-class FileOption
+class FileOption(key: String, value: String)

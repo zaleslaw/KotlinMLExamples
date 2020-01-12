@@ -1,5 +1,7 @@
 package api.df
 
+import api.df.math.CorrelationType
+import api.df.math.Statistics
 import api.sql.JoinType
 import api.sql.Predicate
 import api.sql.SortOrder
@@ -49,7 +51,6 @@ interface DataFrame {
     /** Computes specified statistics for numeric and string columns. */
     fun summary(vararg statistics: Statistics)
 
-
     // Quick scan and tracing
     fun first(): Row
 
@@ -61,7 +62,6 @@ interface DataFrame {
 
     /** Displays the Dataset in a tabular form. */
     fun show(amountOfRows: Int = 10, truncate: Boolean = true)
-
 
     // Split & sampling
     fun split(percentage: Double): Pair<DataFrame, DataFrame>
@@ -144,11 +144,11 @@ interface DataFrame {
     // Set theory operators
     fun distinct()
 
-    fun except(other: DataFrame)
+    infix fun except(other: DataFrame)
 
-    fun intersect(other: DataFrame)
+    infix fun intersect(other: DataFrame)
 
-    fun union(other: DataFrame)
+    infix fun union(other: DataFrame)
 
     // SQL operators
     fun select(vararg columns: String): DataFrame

@@ -4,6 +4,7 @@ import api.KotlinDataSession
 import api.df.MetaColumn
 import api.df.Row
 
+/** This examples covers the basic functionality if DataFrame API: creation via builder, printing the metainfo, operators. */
 fun demo_1() {
     val session = KotlinDataSession.getOrCreate()
 
