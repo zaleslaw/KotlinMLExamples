@@ -21,6 +21,10 @@ abstract class DataColumn<T : Any>(data: Map<Int, Any>) {
 
     abstract fun equals(other: DataFrame): Predicate
 
+    abstract fun notEquals(other: Any): Predicate
+
+    abstract fun notEquals(other: DataColumn<T>): Predicate
+
     // Converters
     abstract fun toDF(): DataFrame
 
@@ -71,6 +75,7 @@ abstract class DataColumn<T : Any>(data: Map<Int, Any>) {
 
     /** Applies a function f to all cells. */
     fun foreach(f: (Cell) -> Unit) {}
+
 
 }
 

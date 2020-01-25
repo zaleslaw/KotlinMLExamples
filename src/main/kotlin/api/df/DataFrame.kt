@@ -59,8 +59,6 @@ interface DataFrame {
 
     operator fun set(s: String, rowIndex: Int, value: Any)
 
-
-
     // Statistic functions
     /** Returns the number of rows in the DataFrame. */
     fun count(): Long
@@ -204,4 +202,6 @@ interface DataFrame {
      * NOTE: additional logic for join conditions is missed.
      */
     fun join(leftDataFrame: DataFrame, joinType: JoinType = JoinType.INNER)
+
+
 }

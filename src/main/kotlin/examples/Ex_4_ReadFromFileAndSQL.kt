@@ -6,6 +6,10 @@ import api.sql.SortOrder
 import api.sql.group.MAX
 import java.nio.file.Paths
 
+val PCLASS = "pclass"
+
+val AGE = "age"
+
 /** This examples demonstrates the power the easy API of ETL-like process over the DataFrame. */
 fun demo_4() {
     val session = DataFrames.get()
@@ -23,11 +27,12 @@ fun demo_4() {
     // >>> 1;1;Barkworth, Mr. Algernon Henry Wilson;male;80;0;0;27042;30;A23;S;B;;Hessle, Yorks
     // >>> 1;0;Baumann, Mr. John D;male;;0;0;PC 17318;25,925;;S;;;New York, NY
 
-    df.select("pclass", "age")
-            .where("pclass != 1 and age > 20")
-            .groupBy("pclass")
+
+    df.select(PCLASS, AGE)
+            .where(df[PCLASS].notEquals(1).and(df[AGE] gt 20))
+            .groupBy(PCLASS)
             .agg(MAX())
-            .orderBy("pclass", SortOrder.DESC)
+            .orderBy(PCLASS, SortOrder.DESC)
             .show()
 
     // >>> 3; 47
