@@ -21,7 +21,7 @@ abstract class DataFrames() {
 
     abstract fun of(vararg columns: MetaColumn): DataFrameBuilder
 
-    abstract fun <T> of(persons: List<T>): DataFrame
+    abstract fun <T> of(data: List<T>): DataFrame
 
     // IO methods
     abstract fun read(filePath: Path, fileFormat: FileFormat, vararg options: FileOption): DataFrame

@@ -25,7 +25,8 @@ interface DataFrame {
     /** Returns all column names and their data types as an array. */
     fun dtypes(): Array<Pair<String, String>>
 
-    fun <T> addColumn(column: MetaColumn)
+    // Change schema
+    fun <T : Any> addColumn(column: String)
 
     fun <T : Any> addColumn(column: String, col: DataColumn<Any>, function: (Cell) -> Any): DataFrame
 
@@ -49,6 +50,16 @@ interface DataFrame {
     fun col(columnName: String): DataColumn<Any>
 
     fun row(index: Int): Row
+
+    operator fun get(columnName: String): DataColumn<Any>
+
+    operator fun set(s: String, value: DataColumn<Any>)
+
+    operator fun get(columnName: String, rowIndex: Int): DataColumn<Any>
+
+    operator fun set(s: String, rowIndex: Int, value: Any)
+
+
 
     // Statistic functions
     /** Returns the number of rows in the DataFrame. */
@@ -111,8 +122,16 @@ interface DataFrame {
     infix operator fun contains(column: DataColumn<Any>): Boolean
 
     // Slicing
-    // NOTE: it could be implemented with the different strategies [1..2..3] as in kotlin-numpy or via builders or via String Expressions
-    //operator fun get(slicingExpression: String): DataFrame
+    // NOTE: it could be implemented with the different strategies [1..2..3] as in kotlin-numpy
+    operator fun get(intRange: IntRange): DataFrame
+
+    operator fun get(intRange: IntRange, i: Int): DataFrame
+
+    operator fun get(i: Int, intRange: IntRange): DataFrame
+
+    operator fun get(intRange1: IntRange, intRange2: IntRange): DataFrame
+
+    operator fun get(i1: Int, i2: Int): DataFrame
 
     // NaN, NULL, Nothing handlers (NOTE: for more complex cases, please have a look to Imputer Trainer)
     /** Fills null values in the passed columns with the default values. */
@@ -173,10 +192,7 @@ interface DataFrame {
 
     fun where(predicate: Predicate): DataFrame
 
-    fun where(predicate: String): DataFrame
-
     fun where(indexes: BooleanArray): DataFrame
-
 
     fun orderBy(column: String, sortOrder: SortOrder = SortOrder.ASC): DataFrame
 
@@ -188,11 +204,4 @@ interface DataFrame {
      * NOTE: additional logic for join conditions is missed.
      */
     fun join(leftDataFrame: DataFrame, joinType: JoinType = JoinType.INNER)
-
-    operator fun set(s: String, value: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-
-    operator fun <T : Any> get(columnName: String): DataColumn<T>
 }

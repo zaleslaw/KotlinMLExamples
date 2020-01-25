@@ -16,7 +16,7 @@ import java.nio.file.Paths
  * hyper-parameters tuning, but finish my design exploration on this level to shortenize the initial size and amount of classes.
  */
 fun demo_6() {
-    val session = DataFrames.getOrCreate()
+    val session = DataFrames.get()
 
     val dataframe = session.read(Paths.get("/home/titanic.csv"), FileFormat.CSV)
 

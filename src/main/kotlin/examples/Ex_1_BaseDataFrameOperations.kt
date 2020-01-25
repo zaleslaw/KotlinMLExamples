@@ -1,7 +1,6 @@
 package examples
 
 import api.DataFrames
-import api.df.MetaColumn
 import api.df.Row
 
 /** This examples covers the basic functionality if DataFrame API: creation via builder, printing the metainfo, operators. */
@@ -9,7 +8,7 @@ fun demo_1() {
     val dataFabric = DataFrames.get()
 
     val df = dataFabric.of("Country", "Population")(listOf("Russia", 145), listOf("Germany", 80), listOf("USA", 320))
-    df.addColumn<Any>(MetaColumn("Capital", String::class))
+    df.addColumn<String>("Capital")
 
     println(df.dtypes())
     // >>> {"Country"->String, "Population"->Int, "Capital"->String}

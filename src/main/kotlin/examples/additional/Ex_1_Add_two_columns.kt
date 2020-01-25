@@ -38,14 +38,13 @@ fun demo() {
     val year = Year.now().getValue()
 
     // First way: Java way
-    var df2 = df.addColumn<Int>(YEAR_OF_BIRTH, df.col(AGE), { cell: Cell -> year - cell.tryDouble() })
+    var df2 = df.addColumn<Int>(YEAR_OF_BIRTH, df[AGE], { cell: Cell -> year - cell.tryDouble() })
 
     // Second way: More Kotlin
-    df2 = df.addColumn<Int>(YEAR_OF_BIRTH, { it: DataFrame -> -it.col(AGE) + year }) // I don't want to extend Int type or wrap it to override minus operator
+    df2 = df.addColumn<Int>(YEAR_OF_BIRTH, { it: DataFrame -> -it[AGE] + year }) // I don't want to extend Int type or wrap it to override minus operator
 
     // Third way: Try more Pandas way via overloaded basic operations
     df2 = df.addColumn(YEAR_OF_BIRTH, createAndFillColumnBy(year, df.rowSize()) - df[AGE])
-
 
     // add yet new column to dataFrame
     // First way: Java way
@@ -72,9 +71,9 @@ fun demo() {
     // >>> { name:String; sex:Sex; yearOfBirth: Int; sex: String; commonTitle: String }
 
     // if column 'age' was dropped
-    val age = df3.col(YEAR_OF_BIRTH) + year
+    val age = df3[YEAR_OF_BIRTH] + year
 
-    var df4 = df3.where(age.gt(18).and(df3.col(SEX).equals(Sex.MALE)))
+    var df4 = df3.where(age.gt(18).and(df3[SEX].equals(Sex.MALE)))
 
     df4.show()
     // >>>  ----------------------------------------------------
@@ -84,7 +83,7 @@ fun demo() {
     // >>>  ------------------------------------|---------------
 
     // if column 'age' is in dataset schema
-    df4 = df3.where(df3.col(AGE).gt(18).and(df3.col(SEX).equals(Sex.MALE)))
+    df4 = df3.where(df3[AGE].gt(18).and(df3[SEX].equals(Sex.MALE)))
 
 
     df.groupBy(AGE, SEX)

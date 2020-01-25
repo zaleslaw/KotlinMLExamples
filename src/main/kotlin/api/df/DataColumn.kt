@@ -26,12 +26,15 @@ abstract class DataColumn<T : Any>(data: Map<Int, Any>) {
 
     abstract fun toRow(): Row
 
+    // Set theory operators
+    abstract infix fun union(other: DataColumn<Any>): DataFrame
+
     // Make operations on two DataColumns. NOTE: these methods union two columns to one DataFrame. Could be changed to algebraic operation with return type DataColumn
-    abstract infix operator fun plus(other: DataColumn<T>): DataColumn<T>
+    abstract infix operator fun plus(other: DataColumn<Any>): DataColumn<Any>
 
-    abstract infix operator fun minus(other: DataColumn<T>): DataColumn<T>
+    abstract infix operator fun minus(other: DataColumn<Any>): DataColumn<Any>
 
-    abstract operator fun unaryMinus(): DataColumn<T>
+    abstract operator fun unaryMinus(): DataColumn<Any>
 
     // Make operations on DataColumn and Cell.
     abstract infix operator fun plus(other: Cell): DataColumn<T>
@@ -49,7 +52,7 @@ abstract class DataColumn<T : Any>(data: Map<Int, Any>) {
 
     abstract infix operator fun minus(number: Number): DataColumn<T>
 
-    abstract infix operator fun times(number: Number): DataColumn<T>
+    abstract infix operator fun times(number: Number): DataColumn<Any>
 
     abstract infix operator fun div(number: Number): DataColumn<T>
 
@@ -57,8 +60,6 @@ abstract class DataColumn<T : Any>(data: Map<Int, Any>) {
 
     // Compare data column and Number
     abstract infix fun gt(number: Number): Predicate
-
-
 
     // Others
     abstract fun values(): Array<Cell>
