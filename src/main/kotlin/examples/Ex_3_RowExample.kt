@@ -1,14 +1,14 @@
 package examples
 
-import api.KotlinDataSession
+import api.createRow
 import api.df.MetaColumn
 
 /** Row class also could be a brick in the wall of the DataFrame API. */
 fun demo_3() {
-    val session = KotlinDataSession.getOrCreate()
 
-    val r1 = session.createRow("CountryPopulation", "CapitalPop")(listOf(140, 12))
-    val r2 = session.createRow(
+
+    val r1 = createRow("CountryPopulation", "CapitalPop")(listOf(140, 12))
+    val r2 = createRow(
             MetaColumn("CountryPopulation", Int::class),
             MetaColumn("CapitalPop", Int::class)
     )(listOf(80, 4))

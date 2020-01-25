@@ -1,9 +1,7 @@
 package api
 
-import api.df.DataColumn
 import api.df.DataFrame
 import api.df.MetaColumn
-import api.df.Row
 import api.io.FileFormat
 import api.io.FileOption
 import api.sql.IfExistTableStrategy
@@ -11,10 +9,10 @@ import org.jetbrains.numkt.core.KtNDArray
 import java.nio.file.Path
 import java.sql.Connection
 
-abstract class KotlinDataSession() {
+abstract class DataFrames() {
     companion object {
-        fun getOrCreate(): KotlinDataSession {
-            return KotlinDataSession()
+        fun get(): DataFrames {
+            return DataFrames()
         }
     }
 
@@ -23,22 +21,7 @@ abstract class KotlinDataSession() {
 
     abstract fun of(vararg columns: MetaColumn): DataFrameBuilder
 
-    abstract fun byRows(rows: Iterable<Row>): DataFrame
-
-
-    // Create Row methods
-    abstract fun createRow(vararg headers: String): RowBuilder
-
-    abstract fun createRow(vararg columns: MetaColumn): RowBuilder
-
-    abstract fun createAndFillRow(data: Map<Any, Any>): DataFrame
-
-    // Create DataColumn methods
-    abstract fun createColumn(columnName: String): DataColumnBuilder
-
-    abstract fun createColumn(column: MetaColumn): DataColumnBuilder
-
-    abstract fun createAndFillColumn(data: List<Any>): DataFrame
+    abstract fun <T> of(persons: List<T>): DataFrame
 
     // IO methods
     abstract fun read(filePath: Path, fileFormat: FileFormat, vararg options: FileOption): DataFrame
@@ -49,7 +32,6 @@ abstract class KotlinDataSession() {
     abstract fun readTable(tableName: String, connection: Connection, schema: String? = null, selectExpr: String): DataFrame
 
     abstract fun writeTable(tableName: String, connection: Connection, schema: String? = null, ifExists: IfExistTableStrategy = IfExistTableStrategy.FAIL): DataFrame
-
 }
 
 class DataFrameBuilder {
@@ -62,14 +44,4 @@ class DataFrameBuilder {
     }
 }
 
-class RowBuilder {
-    operator fun invoke(data: Iterable<Any?>): Row {
-        TODO();
-    }
-}
 
-class DataColumnBuilder {
-    operator fun invoke(data: Iterable<Any?>): DataColumn {
-        TODO();
-    }
-}

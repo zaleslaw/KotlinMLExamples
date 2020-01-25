@@ -18,17 +18,35 @@ interface DataFrame {
 
     fun columnNames(): Array<String>
 
+    fun rowSize(): Int
+
+    fun columnSize(): Int
+
     /** Returns all column names and their data types as an array. */
     fun dtypes(): Array<Pair<String, String>>
 
-    fun addColumn(column: MetaColumn)
+    fun <T> addColumn(column: MetaColumn)
+
+    fun <T : Any> addColumn(column: String, col: DataColumn<Any>, function: (Cell) -> Any): DataFrame
+
+    fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, function: (Cell, Cell) -> T): DataFrame
+
+    fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, col2: DataColumn<Any>, function: (Cell, Cell, Cell) -> T): DataFrame
+
+    fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, col2: DataColumn<Any>, col3: DataColumn<Any>, function: (Cell, Cell, Cell, Cell) -> T): DataFrame
+
+    fun <T : Any> addColumn(column: String, function: (DataFrame) -> DataColumn<Any>): DataFrame
+
+    fun <T : Any> addColumnAndFill(column: String, function: (Row) -> T): DataFrame
+
+    fun <T : Any> addColumn(column: String, function: DataColumn<T>): DataFrame
 
     fun dropColumn(columnName: String)
 
     // Data operations
-    fun col(index: Int): DataColumn
+    fun col(index: Int): DataColumn<Any>
 
-    fun col(columnName: String): DataColumn
+    fun col(columnName: String): DataColumn<Any>
 
     fun row(index: Int): Row
 
@@ -86,15 +104,15 @@ interface DataFrame {
     infix operator fun contains(row: Row): Boolean
 
     /** Adds/removes/checks data presented as DataColumn or throws exception on the different schemas. */
-    infix operator fun plus(column: DataColumn): DataFrame
+    infix operator fun plus(column: DataColumn<Any>): DataFrame
 
-    infix operator fun minus(column: DataColumn): DataFrame
+    infix operator fun minus(column: DataColumn<Any>): DataFrame
 
-    infix operator fun contains(column: DataColumn): Boolean
+    infix operator fun contains(column: DataColumn<Any>): Boolean
 
     // Slicing
     // NOTE: it could be implemented with the different strategies [1..2..3] as in kotlin-numpy or via builders or via String Expressions
-    operator fun get(slicingExpression: String): DataFrame
+    //operator fun get(slicingExpression: String): DataFrame
 
     // NaN, NULL, Nothing handlers (NOTE: for more complex cases, please have a look to Imputer Trainer)
     /** Fills null values in the passed columns with the default values. */
@@ -157,6 +175,9 @@ interface DataFrame {
 
     fun where(predicate: String): DataFrame
 
+    fun where(indexes: BooleanArray): DataFrame
+
+
     fun orderBy(column: String, sortOrder: SortOrder = SortOrder.ASC): DataFrame
 
     fun groupBy(vararg columns: String): GroupedDataFrame
@@ -167,4 +188,11 @@ interface DataFrame {
      * NOTE: additional logic for join conditions is missed.
      */
     fun join(leftDataFrame: DataFrame, joinType: JoinType = JoinType.INNER)
+
+    operator fun set(s: String, value: Any) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+
+    operator fun <T : Any> get(columnName: String): DataColumn<T>
 }

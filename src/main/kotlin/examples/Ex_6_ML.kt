@@ -1,6 +1,6 @@
 package examples
 
-import api.KotlinDataSession
+import api.DataFrames
 import api.df.Row
 import api.io.FileFormat
 import api.ml.Vector
@@ -16,7 +16,7 @@ import java.nio.file.Paths
  * hyper-parameters tuning, but finish my design exploration on this level to shortenize the initial size and amount of classes.
  */
 fun demo_6() {
-    val session = KotlinDataSession.getOrCreate()
+    val session = DataFrames.getOrCreate()
 
     val dataframe = session.read(Paths.get("/home/titanic.csv"), FileFormat.CSV)
 

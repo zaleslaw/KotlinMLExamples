@@ -1,9 +1,11 @@
 package api.df
 
+import api.sql.Predicate
+
 /**
  * Column projection with data, including meta-information.
  */
-abstract class DataColumn(data: Map<Int, Any>) {
+abstract class DataColumn<T : Any>(data: Map<Int, Any>) {
     abstract fun metadata(): MetaColumn
 
     // Getters/setters/equals
@@ -13,9 +15,11 @@ abstract class DataColumn(data: Map<Int, Any>) {
 
     abstract operator fun set(index: Int, value: Any)
 
-    abstract fun equals(other: DataColumn): Boolean
+    abstract fun equals(other: Any): Predicate
 
-    abstract fun equals(other: DataFrame): Boolean // True if DataFrame contains one column
+    abstract fun equals(other: DataColumn<T>): Predicate
+
+    abstract fun equals(other: DataFrame): Predicate
 
     // Converters
     abstract fun toDF(): DataFrame
@@ -23,31 +27,38 @@ abstract class DataColumn(data: Map<Int, Any>) {
     abstract fun toRow(): Row
 
     // Make operations on two DataColumns. NOTE: these methods union two columns to one DataFrame. Could be changed to algebraic operation with return type DataColumn
-    abstract infix operator fun plus(other: DataColumn): DataFrame
+    abstract infix operator fun plus(other: DataColumn<T>): DataColumn<T>
 
-    abstract infix operator fun minus(other: DataColumn): DataFrame
+    abstract infix operator fun minus(other: DataColumn<T>): DataColumn<T>
+
+    abstract operator fun unaryMinus(): DataColumn<T>
 
     // Make operations on DataColumn and Cell.
-    abstract infix operator fun plus(other: Cell): DataColumn
+    abstract infix operator fun plus(other: Cell): DataColumn<T>
 
-    abstract infix operator fun minus(other: Cell): DataColumn
+    abstract infix operator fun minus(other: Cell): DataColumn<T>
 
     abstract infix operator fun contains(other: Cell): Boolean
 
-    abstract infix operator fun times(other: Cell): DataColumn
+    abstract infix operator fun times(other: Cell): DataColumn<T>
 
-    abstract infix operator fun div(other: Cell): DataColumn
+    abstract infix operator fun div(other: Cell): DataColumn<T>
 
     // Make operations on DataColumn and Number.
-    abstract infix operator fun plus(number: Number): DataColumn
+    abstract infix operator fun plus(number: Number): DataColumn<T>
 
-    abstract infix operator fun minus(number: Number): DataColumn
+    abstract infix operator fun minus(number: Number): DataColumn<T>
 
-    abstract infix operator fun times(number: Number): DataColumn
+    abstract infix operator fun times(number: Number): DataColumn<T>
 
-    abstract infix operator fun div(number: Number): DataColumn
+    abstract infix operator fun div(number: Number): DataColumn<T>
 
     abstract infix operator fun contains(number: Number): Boolean
+
+    // Compare data column and Number
+    abstract infix fun gt(number: Number): Predicate
+
+
 
     // Others
     abstract fun values(): Array<Cell>
@@ -59,6 +70,7 @@ abstract class DataColumn(data: Map<Int, Any>) {
 
     /** Applies a function f to all cells. */
     fun foreach(f: (Cell) -> Unit) {}
+
 }
 
 

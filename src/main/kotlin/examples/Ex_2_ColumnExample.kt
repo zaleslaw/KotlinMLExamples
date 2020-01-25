@@ -1,15 +1,15 @@
 package examples
 
-import api.KotlinDataSession
+import api.createColumn
 import api.df.Cell
 import api.df.MetaColumn
 
 /** DataColumn could be a basic unit for data manipulation and DataFrame building. */
 fun demo_2() {
-    val session = KotlinDataSession.getOrCreate()
 
-    val c1 = session.createColumn("CountryPopulation")(listOf(140, 80, 320))
-    val c2 = session.createColumn(
+
+    val c1 = createColumn("CountryPopulation")(listOf(140, 80, 320))
+    val c2 = createColumn(
             MetaColumn("CapitalPop", Int::class)
     )(listOf(13, 3, 2))
 

@@ -1,6 +1,6 @@
 package examples
 
-import api.KotlinDataSession
+import api.DataFrames
 
 /**
  * I'd like the solution from KotlinNumPy approach for working with the slices via 1..2..None approach,
@@ -10,7 +10,7 @@ import api.KotlinDataSession
  * How's about that?
  */
 fun demo_5() {
-    val session = KotlinDataSession.getOrCreate()
+    val session = DataFrames.get()
 
     val df = session.of("Country", "Population", "Capital")(
             listOf("Russia", 145, "Moscow"),

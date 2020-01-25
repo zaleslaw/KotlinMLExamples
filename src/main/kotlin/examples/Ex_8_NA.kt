@@ -1,6 +1,6 @@
 package examples
 
-import api.KotlinDataSession
+import api.DataFrames
 import api.df.Cell
 import api.df.MetaColumn
 
@@ -8,7 +8,7 @@ import api.df.MetaColumn
  * The final examples lights the standard functionality of na package like in R.
  */
 fun demo_8() {
-    val session = KotlinDataSession.getOrCreate()
+    val session = DataFrames.get()
 
     val df = session.of("Country", "Population")(listOf("", 145.0), listOf("Germany", 80.0), listOf("USA", Double.NaN))
     df.show()

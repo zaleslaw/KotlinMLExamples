@@ -5,4 +5,12 @@ package api.sql
  *
  * I suppose that the Exposed SQL https://github.com/JetBrains/Exposed could be a reference framework and API should be inherited from there.
  */
-class Predicate
+class Predicate {
+    fun and(rightExpression: Predicate): Predicate {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    fun or(rightExpression: Predicate): Predicate {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+}

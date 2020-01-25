@@ -1,6 +1,6 @@
 package examples
 
-import api.KotlinDataSession
+import api.DataFrames
 import api.io.FileFormat
 import api.sql.SortOrder
 import api.sql.group.MAX
@@ -8,7 +8,7 @@ import java.nio.file.Paths
 
 /** This examples demonstrates the power the easy API of ETL-like process over the DataFrame. */
 fun demo_4() {
-    val session = KotlinDataSession.getOrCreate()
+    val session = DataFrames.get()
 
     val df = session.read(Paths.get("/home/titanic.csv"), FileFormat.CSV)
 
