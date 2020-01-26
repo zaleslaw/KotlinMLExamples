@@ -5,6 +5,7 @@ import api.createAndFillColumnBy
 import api.df.Cell
 import api.df.DataFrame
 import api.df.Row
+import api.sql.group.COUNT
 import api.sql.group.MAX
 import java.time.Year
 
@@ -13,6 +14,14 @@ val YEAR_OF_BIRTH = "yearOfBirth"
 val AGE = "age"
 
 val SEX = "sex"
+
+val NAME = "name"
+
+/* Default field name for count aggregation function. */
+val COUNT = "count"
+
+/* Default field name for max aggregation function. */
+val MAX = "max"
 
 val COMMON_TITLE = "commonTitle"
 
@@ -85,11 +94,15 @@ fun demo() {
     // if column 'age' is in dataset schema
     df4 = df3.where(df3[AGE].gt(18).and(df3[SEX].equals(Sex.MALE)))
 
+    // Prepare two data-frames for self-join
+    val nameAndCount = df.groupBy(AGE, SEX, NAME).agg(COUNT())
+    val maxValues = nameAndCount.groupBy(AGE, SEX).agg(MAX(COUNT))
 
-    df.groupBy(AGE, SEX)
-            .agg(MAX())
-            .show()
+    val predicate = maxValues[MAX].equals(nameAndCount[COUNT])
+            .and(maxValues[AGE].equals(nameAndCount[AGE]))
+            .and(maxValues[SEX].equals(nameAndCount[SEX]))
 
+    nameAndCount.join(maxValues, predicate).select(AGE, SEX, NAME).show()
     // >>>  ---------------------------
     // >>> | Group<age,sex>| max(name)|
     // >>> ----------------------------

@@ -5,6 +5,10 @@ import api.df.DataFrame
 import api.df.MetaColumn
 
 // Create DataColumn methods
+fun <T : Any> createEmptyColumn(columnName: String): DataColumn<T> {
+    TODO()
+}
+
 fun <T : Any> createColumn(columnName: String): DataColumnBuilder<T> {
     TODO()
 }

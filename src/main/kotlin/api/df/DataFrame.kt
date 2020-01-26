@@ -7,201 +7,212 @@ import api.sql.Predicate
 import api.sql.SortOrder
 import api.sql.group.GroupedDataFrame
 
+
 /**
  * The basic interface for all supported DataFrames.
  */
-interface DataFrame {
+abstract class DataFrame() {
+    abstract val dataColumns: List<DataColumn<*>>
+
     // Metadata
-    fun schema(): DataFrameSchema
+    abstract fun schema(): DataFrameSchema
 
-    fun schemaToString(): String
+    abstract fun schemaToString(): String
 
-    fun columnNames(): Array<String>
+    abstract fun columnNames(): Array<String>
 
-    fun rowSize(): Int
+    abstract fun rowSize(): Int
 
-    fun columnSize(): Int
+    abstract fun columnSize(): Int
 
     /** Returns all column names and their data types as an array. */
-    fun dtypes(): Array<Pair<String, String>>
+    abstract fun dtypes(): Array<Pair<String, String>>
 
     // Change schema
-    fun <T : Any> addColumn(column: String)
+    abstract fun <T : Any> addColumn(column: String)
 
-    fun <T : Any> addColumn(column: String, col: DataColumn<Any>, function: (Cell) -> Any): DataFrame
+    abstract fun <T : Any> addColumn(column: String, col: DataColumn<Any>, function: (Cell) -> Any): DataFrame
 
-    fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, function: (Cell, Cell) -> T): DataFrame
+    abstract fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, function: (Cell, Cell) -> T): DataFrame
 
-    fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, col2: DataColumn<Any>, function: (Cell, Cell, Cell) -> T): DataFrame
+    abstract fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, col2: DataColumn<Any>, function: (Cell, Cell, Cell) -> T): DataFrame
 
-    fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, col2: DataColumn<Any>, col3: DataColumn<Any>, function: (Cell, Cell, Cell, Cell) -> T): DataFrame
+    abstract fun <T : Any> addColumn(column: String, col: DataColumn<Any>, col1: DataColumn<Any>, col2: DataColumn<Any>, col3: DataColumn<Any>, function: (Cell, Cell, Cell, Cell) -> T): DataFrame
 
-    fun <T : Any> addColumn(column: String, function: (DataFrame) -> DataColumn<Any>): DataFrame
+    abstract fun <T : Any> addColumn(column: String, function: (DataFrame) -> DataColumn<Any>): DataFrame
 
-    fun <T : Any> addColumnAndFill(column: String, function: (Row) -> T): DataFrame
+    abstract fun <T : Any> addColumnAndFill(column: String, function: (Row) -> T): DataFrame
 
-    fun <T : Any> addColumn(column: String, function: DataColumn<T>): DataFrame
+    abstract fun <T : Any> addColumn(column: String, function: DataColumn<T>): DataFrame
 
-    fun dropColumn(columnName: String)
+    abstract fun dropColumn(columnName: String)
 
     // Data operations
-    fun col(index: Int): DataColumn<Any>
+    abstract fun col(index: Int): DataColumn<Any>
 
-    fun col(columnName: String): DataColumn<Any>
+    abstract fun col(columnName: String): DataColumn<Any>
 
-    fun row(index: Int): Row
+    abstract fun row(index: Int): Row
 
-    operator fun get(columnName: String): DataColumn<Any>
+    abstract operator fun get(columnName: String): DataColumn<Any>
 
-    operator fun set(s: String, value: DataColumn<Any>)
+    abstract operator fun set(s: String, value: DataColumn<Any>)
 
-    operator fun get(columnName: String, rowIndex: Int): DataColumn<Any>
+    abstract operator fun get(columnName: String, rowIndex: Int): DataColumn<Any>
 
-    operator fun set(s: String, rowIndex: Int, value: Any)
+    abstract operator fun set(s: String, rowIndex: Int, value: Any)
 
     // Statistic functions
     /** Returns the number of rows in the DataFrame. */
-    fun count(): Long
+    abstract fun count(): Long
 
     /** Calculates the correlation of two columns of a DataFrame. */
-    fun corr(firstColumnName: String, secondColumnName: String, type: CorrelationType = CorrelationType.PEARSON)
+    abstract fun corr(firstColumnName: String, secondColumnName: String, type: CorrelationType = CorrelationType.PEARSON)
 
     /** Calculates the covariance of two columns of a DataFrame. */
-    fun cov(firstColumnName: String, secondColumnName: String)
+    abstract fun cov(firstColumnName: String, secondColumnName: String)
 
     /**
      * Computes basic statistics for numeric and string columns, including count, mean, stddev, min, and max.
      * If no columns are given, this function computes statistics for all numerical or string columns.
      */
-    fun describe(vararg columnNames: String): DataFrame
+    abstract fun describe(vararg columnNames: String): DataFrame
 
     /** Computes specified statistics for numeric and string columns. */
-    fun summary(vararg statistics: Statistics)
+    abstract fun summary(vararg statistics: Statistics)
 
     // Quick scan and tracing
-    fun first(): Row
+    abstract fun first(): Row
 
-    fun last(): Row
+    abstract fun last(): Row
 
-    fun head(amountOfRows: Int = 5): DataFrame
+    abstract fun head(amountOfRows: Int = 5): DataFrame
 
-    fun tail(amountOfRows: Int = 5): DataFrame
+    abstract fun tail(amountOfRows: Int = 5): DataFrame
 
     /** Displays the Dataset in a tabular form. */
-    fun show(amountOfRows: Int = 10, truncate: Boolean = true)
+    abstract fun show(amountOfRows: Int = 10, truncate: Boolean = true)
 
     // Split & sampling
-    fun split(percentage: Double): Pair<DataFrame, DataFrame>
+    abstract fun split(percentage: Double): Pair<DataFrame, DataFrame>
 
     /**
      * Returns a new DataFrame by sampling a fraction of rows, using a user-supplied seed.
      */
-    fun sample(withReplacement: Boolean = false, fraction: Double = 0.1, seed: Long = 1234L)
+    abstract fun sample(withReplacement: Boolean = false, fraction: Double = 0.1, seed: Long = 1234L)
 
     // Overloaded for two DataFrames or two DataFrame and one Row with the same schema
     /** Adds/removes/checks data presented as Row or DataFrame or throws exception on the different schemas. */
-    infix operator fun plus(other: DataFrame): DataFrame
+    abstract infix operator fun plus(other: DataFrame): DataFrame
 
-    infix operator fun plus(row: Row): DataFrame
+    abstract infix operator fun plus(row: Row): DataFrame
 
-    infix operator fun minus(other: DataFrame): DataFrame
+    abstract infix operator fun minus(other: DataFrame): DataFrame
 
-    infix operator fun minus(row: Row): DataFrame
+    abstract infix operator fun minus(row: Row): DataFrame
 
-    infix operator fun contains(other: DataFrame): Boolean
+    abstract infix operator fun contains(other: DataFrame): Boolean
 
-    infix operator fun contains(row: Row): Boolean
+    abstract infix operator fun contains(row: Row): Boolean
 
     /** Adds/removes/checks data presented as DataColumn or throws exception on the different schemas. */
-    infix operator fun plus(column: DataColumn<Any>): DataFrame
+    abstract infix operator fun plus(column: DataColumn<Any>): DataFrame
 
-    infix operator fun minus(column: DataColumn<Any>): DataFrame
+    abstract infix operator fun minus(column: DataColumn<Any>): DataFrame
 
-    infix operator fun contains(column: DataColumn<Any>): Boolean
+    abstract infix operator fun contains(column: DataColumn<Any>): Boolean
 
     // Slicing
     // NOTE: it could be implemented with the different strategies [1..2..3] as in kotlin-numpy
-    operator fun get(intRange: IntRange): DataFrame
+    abstract operator fun get(intRange: IntRange): DataFrame
 
-    operator fun get(intRange: IntRange, i: Int): DataFrame
+    abstract operator fun get(intRange: IntRange, i: Int): DataFrame
 
-    operator fun get(i: Int, intRange: IntRange): DataFrame
+    abstract operator fun get(i: Int, intRange: IntRange): DataFrame
 
-    operator fun get(intRange1: IntRange, intRange2: IntRange): DataFrame
+    abstract operator fun get(intRange1: IntRange, intRange2: IntRange): DataFrame
 
-    operator fun get(i1: Int, i2: Int): DataFrame
+    abstract operator fun get(i1: Int, i2: Int): DataFrame
 
     // NaN, NULL, Nothing handlers (NOTE: for more complex cases, please have a look to Imputer Trainer)
     /** Fills null values in the passed columns with the default values. */
-    infix fun fill(defaultValues: Map<String, Cell>): DataFrame
+    abstract infix fun fill(defaultValues: Map<String, Cell>): DataFrame
+
+    abstract infix fun fill(defaultValues: List<*>): DataFrame
 
     /** Fills null values in the passed column with the default value. */
-    fun fill(columnName: String, defaultValue: Cell): DataFrame
+    abstract fun fill(columnName: String, defaultValue: Cell): DataFrame
 
     /**
      * Fills null values in the passed column with the default value.
      * Generates an exception if the default value is out of column type.
      */
-    fun fill(columnName: String, defaultValue: Any): DataFrame
+    abstract fun fill(columnName: String, defaultValue: Any): DataFrame
 
     /**
      * Fills null values in the passed column with the default value.
      * Generates an exception if the default value is out of column type.
      */
-    fun fill(column: MetaColumn, defaultValue: Any): DataFrame
+    abstract fun fill(column: MetaColumn, defaultValue: Any): DataFrame
 
     /**
      * Returns a new DataFrame that drops rows containing less than maxPartOfMissedValuesInRow part of
      * null or NaN values from all values in row.
      * @maxPartOfMissedValuesInColumn Value between 0.0 and 1.0.
      */
-    fun drop(maxPartOfMissedValuesInRow: Double = 0.0): DataFrame
+    abstract fun drop(maxPartOfMissedValuesInRow: Double = 0.0): DataFrame
 
     /** Returns a new DataFrame that drops rows containing any null or NaN values in the passed column. */
-    infix fun drop(columnName: String): DataFrame
+    abstract infix fun drop(columnName: String): DataFrame
 
     /** Returns a new DataFrame that drops rows containing any null or NaN values in the passed column. */
-    infix fun drop(column: MetaColumn): DataFrame
+    abstract infix fun drop(column: MetaColumn): DataFrame
 
     /**
      * Returns a new DataFrame that drops rows containing less than maxPartOfMissedValuesInRow part of
      * null or NaN values from all values in specified columns.
      * @maxPartOfMissedValuesInColumn Value between 0.0 and 1.0.
      */
-    fun drop(vararg columnNames: String, maxPartOfMissedValuesInRow: Double = 0.0): DataFrame
+    abstract fun drop(vararg columnNames: String, maxPartOfMissedValuesInRow: Double = 0.0): DataFrame
 
     // Functional operators
     /** Applies a function f to all rows. */
-    fun foreach(f: (Row) -> Unit)
+    abstract fun foreach(f: (Row) -> Unit)
 
-    fun map(f: (Row) -> Row)
+    abstract fun map(f: (Row) -> Row)
 
     // Set theory operators
-    fun distinct()
+    abstract fun distinct()
 
-    infix fun except(other: DataFrame)
+    abstract infix fun except(other: DataFrame)
 
-    infix fun intersect(other: DataFrame)
+    abstract infix fun intersect(other: DataFrame)
 
-    infix fun union(other: DataFrame)
+    abstract infix fun union(other: DataFrame)
 
     // SQL operators
-    fun select(vararg columns: String): DataFrame
+    abstract fun select(vararg columns: String): DataFrame
 
-    fun where(predicate: Predicate): DataFrame
+    abstract fun where(predicate: Predicate): DataFrame
 
-    fun where(indexes: BooleanArray): DataFrame
+    abstract fun where(indexes: BooleanArray): DataFrame
 
-    fun orderBy(column: String, sortOrder: SortOrder = SortOrder.ASC): DataFrame
+    abstract fun orderBy(column: String, sortOrder: SortOrder = SortOrder.ASC): DataFrame
 
-    fun groupBy(vararg columns: String): GroupedDataFrame
+    abstract fun groupBy(vararg columns: String): GroupedDataFrame
 
     /**
      * Create join relation with another DataFrame.
      *
      * NOTE: additional logic for join conditions is missed.
      */
-    fun join(leftDataFrame: DataFrame, joinType: JoinType = JoinType.INNER)
+    abstract fun join(leftDataFrame: DataFrame, joinType: JoinType = JoinType.INNER): DataFrame
+
+    abstract fun join(leftDataFrame: DataFrame, predicate: Predicate, joinType: JoinType = JoinType.INNER): DataFrame
+
+    fun drop(age: DataColumn<*>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
 
 
 }

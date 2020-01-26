@@ -23,6 +23,8 @@ abstract class DataFrames() {
 
     abstract fun <T> of(data: List<T>): DataFrame
 
+    abstract fun <T> fill(df: DataFrame, data: List<T>): DataFrame
+
     // IO methods
     abstract fun read(filePath: Path, fileFormat: FileFormat, vararg options: FileOption): DataFrame
 
@@ -32,6 +34,7 @@ abstract class DataFrames() {
     abstract fun readTable(tableName: String, connection: Connection, schema: String? = null, selectExpr: String): DataFrame
 
     abstract fun writeTable(tableName: String, connection: Connection, schema: String? = null, ifExists: IfExistTableStrategy = IfExistTableStrategy.FAIL): DataFrame
+
 }
 
 class DataFrameBuilder {
