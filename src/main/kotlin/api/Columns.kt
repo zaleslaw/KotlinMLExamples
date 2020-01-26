@@ -5,15 +5,15 @@ import api.df.DataFrame
 import api.df.MetaColumn
 
 // Create DataColumn methods
-fun <T : Any> createEmptyColumn(columnName: String): DataColumn<T> {
+fun <T : Any> defineColumn(columnName: String): DataColumn<T> {
     TODO()
 }
 
-fun <T : Any> createColumn(columnName: String): DataColumnBuilder<T> {
+fun <T : Any> createAndFillColumn(columnName: String): DataColumnBuilder<T> {
     TODO()
 }
 
-fun <T : Any> createColumn(column: MetaColumn): DataColumnBuilder<T> {
+fun <T : Any> createAndFillColumn(column: MetaColumn): DataColumnBuilder<T> {
     TODO()
 }
 

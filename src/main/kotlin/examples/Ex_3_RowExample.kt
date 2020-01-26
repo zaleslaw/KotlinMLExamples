@@ -5,8 +5,6 @@ import api.df.MetaColumn
 
 /** Row class also could be a brick in the wall of the DataFrame API. */
 fun demo_3() {
-
-
     val r1 = createRow("CountryPopulation", "CapitalPop")(listOf(140, 12))
     val r2 = createRow(
             MetaColumn("CountryPopulation", Int::class),

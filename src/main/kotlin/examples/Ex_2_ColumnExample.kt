@@ -1,14 +1,14 @@
 package examples
 
-import api.createColumn
+import api.createAndFillColumn
 import api.df.Cell
 
 /** DataColumn could be a basic unit for data manipulation and DataFrame building. */
 fun demo_2() {
 
 
-    val c1 = createColumn<String>("CountryPopulation")(listOf(140, 80, 320))
-    val c2 = createColumn<Int>("CapitalPop")(listOf(13, 3, 2))
+    val c1 = createAndFillColumn<String>("CountryPopulation")(listOf(140, 80, 320))
+    val c2 = createAndFillColumn<Int>("CapitalPop")(listOf(13, 3, 2))
 
     println(c1 == c2)
     // >>> False

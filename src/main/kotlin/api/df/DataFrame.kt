@@ -156,6 +156,16 @@ abstract class DataFrame() {
     abstract fun fill(column: MetaColumn, defaultValue: Any): DataFrame
 
     /**
+     * Fills all data in the given column according the given lambda.
+     */
+    abstract fun <DF : DataFrame> fillColumn(column: DataColumn<*>, function: (DF) -> DataColumn<*>)
+
+    /**
+     * Fills all data in the given column according the given lambda.
+     */
+    abstract fun <T : Any> fillColumnForEach(column: DataColumn<*>, function: (Row) -> T)
+
+    /**
      * Returns a new DataFrame that drops rows containing less than maxPartOfMissedValuesInRow part of
      * null or NaN values from all values in row.
      * @maxPartOfMissedValuesInColumn Value between 0.0 and 1.0.
@@ -167,6 +177,11 @@ abstract class DataFrame() {
 
     /** Returns a new DataFrame that drops rows containing any null or NaN values in the passed column. */
     abstract infix fun drop(column: MetaColumn): DataFrame
+
+
+    abstract fun drop(column: DataColumn<*>)
+
+    abstract fun <DF : DataFrame> drop(dataFrame: DF, column: DataColumn<*>)
 
     /**
      * Returns a new DataFrame that drops rows containing less than maxPartOfMissedValuesInRow part of
@@ -193,6 +208,8 @@ abstract class DataFrame() {
     // SQL operators
     abstract fun select(vararg columns: String): DataFrame
 
+    abstract fun select(vararg columns: DataColumn<*>): DataFrame
+
     abstract fun where(predicate: Predicate): DataFrame
 
     abstract fun where(indexes: BooleanArray): DataFrame
@@ -200,6 +217,8 @@ abstract class DataFrame() {
     abstract fun orderBy(column: String, sortOrder: SortOrder = SortOrder.ASC): DataFrame
 
     abstract fun groupBy(vararg columns: String): GroupedDataFrame
+
+    abstract fun groupBy(vararg columns: DataColumn<*>): GroupedDataFrame
 
     /**
      * Create join relation with another DataFrame.
@@ -210,9 +229,9 @@ abstract class DataFrame() {
 
     abstract fun join(leftDataFrame: DataFrame, predicate: Predicate, joinType: JoinType = JoinType.INNER): DataFrame
 
-    fun drop(age: DataColumn<*>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
 
-
+    /**
+     * Converts one data-frame to another and populates by data from another DataFrame. Throws exception if something goes wrong.
+     */
+    abstract fun from(another: DataFrame)
 }

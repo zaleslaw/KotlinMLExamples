@@ -14,6 +14,7 @@ fun main() {
     Cities.id
     Cities.name
 
+
     transaction {
         val saintPetersburgId = Cities.insert {
             it[name] = "St. Petersburg"

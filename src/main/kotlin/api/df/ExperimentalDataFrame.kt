@@ -9,6 +9,34 @@ import api.sql.group.GroupedDataFrame
 
 
 open class ExperimentalDataFrame() : DataFrame() {
+    override fun <T : Any> fillColumnForEach(column: DataColumn<*>, function: (Row) -> T) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun from(another: DataFrame) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun select(vararg columns: DataColumn<*>): DataFrame {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun groupBy(vararg columns: DataColumn<*>): GroupedDataFrame {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun drop(column: DataColumn<*>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun <DF : DataFrame> drop(dataFrame: DF, column: DataColumn<*>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun <DF : DataFrame> fillColumn(column: DataColumn<*>, function: (DF) -> DataColumn<*>) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
     override fun join(leftDataFrame: DataFrame, predicate: Predicate, joinType: JoinType): DataFrame {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -288,7 +316,7 @@ open class ExperimentalDataFrame() : DataFrame() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    override fun join(leftDataFrame: DataFrame, joinType: JoinType) {
+    override fun join(leftDataFrame: DataFrame, joinType: JoinType): DataFrame {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
